@@ -1,0 +1,573 @@
+// Different stylings for all buttons
+// iconButton | .rejection (red) | .approval (green)
+// iconButton2 | .rejection (red) | .approval (green)
+// buttonToolTip |
+// button | .rejection (red) | .approval (green)
+// buttonType1 |
+
+// =====================
+// ICON BUTTON CIRCLE
+// =====================
+.iconButton {
+  display: flex;
+  // align-self: end;
+  justify-content: center;
+  align-items: center;
+  background-color: $neutral800;
+  color: $neutral100;
+  padding: 0.5em;
+  border-radius: 50%;
+  position: relative;
+  border: 1px solid $neutral300;
+
+  // Disabled
+  &:disabled {
+    color: $neutral600;
+    background-color: $neutral400;
+
+    &:hover {
+      border: 1px solid $neutral600;
+      background-color: $neutral400;
+      cursor: not-allowed;
+    }
+  }
+
+  &:hover {
+    background-color: $primary;
+    transition: background-color 0.1s;
+  }
+
+  &.active {
+    background-color: $primary; // your primary color
+    border-color: $primary;
+  }
+
+  // RED
+  &.rejection {
+    background-color: rgba($error600, 0.8);
+
+    &:hover {
+      background-color: $error600;
+      transition: background-color 0.1s;
+    }
+  }
+
+  // GREEN
+  &.approval {
+    background-color: rgba($success600, 0.8);
+
+    &:hover {
+      background-color: $success600;
+      transition: background-color 0.1s;
+    }
+  }
+}
+
+// =====================
+// ICON BUTTON SQUARE
+// =====================
+.iconButton2 {
+  display: flex;
+  // align-self: end;
+  justify-content: center;
+  align-items: center;
+  background-color: $neutral800;
+  color: $neutral100;
+  padding: 0.5em;
+  border-radius: 0.5rem;
+  position: relative;
+  border: 1px solid $neutral300;
+  width: max-content;
+  height: fit-content;
+
+  // Disabled
+  &:disabled {
+    color: $neutral600;
+    background-color: $neutral400;
+
+    &:hover {
+      border: 1px solid $neutral600;
+      background-color: $neutral400;
+      cursor: not-allowed;
+    }
+  }
+
+  &:hover {
+    background-color: $primary;
+    transition: background-color 0.1s;
+  }
+
+  &.active {
+    background-color: $primary; // your primary color
+    border-color: $primary;
+  }
+
+  // Red
+  &.rejection {
+    background-color: rgba($error600, 0.8);
+
+    &:hover {
+      background-color: $error600;
+      transition: background-color 0.1s;
+    }
+  }
+
+  // Green
+  &.approval {
+    background-color: rgba($success600, 0.8);
+
+    &:hover {
+      background-color: $success600;
+      transition: background-color 0.1s;
+    }
+  }
+}
+
+// =====================
+// BUTTON TOOL TIP
+// =====================
+.buttonTooltip {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  white-space: nowrap;
+
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+
+  font-size: 0.65rem;
+  font-weight: 500;
+
+  background-color: $neutral900;
+  color: $neutral100;
+  border: 1px solid $neutral800;
+
+  pointer-events: none;
+  z-index: 20;
+}
+
+// =====================
+// DEFAULT - Orange Border Hover - Padding Large - Width Fit Content
+// =====================
+.button {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb($neutral400, 0.1);
+  border-radius: 10px;
+  border: 1px solid $neutral600;
+  padding: 0.8rem 1.2rem;
+  transition: 0.3s;
+  width: fit-content;
+  text-wrap: nowrap;
+
+  &.iconButton2 {
+    padding: 0.4rem;
+  }
+
+  // =====================
+  // TYPE 1 - Orange Background Hover - Padding Large - Width Fit Content
+  // =====================
+  &.buttonType1 {
+    background-color: rgb($neutral400, 0.1);
+    border-radius: 10px;
+    border: 1px solid $neutral600;
+    padding: 0.8rem 1.2rem;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: $primary;
+      color: $neutral100;
+      border: 1px solid $primary;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // TYPE 2 - Orange Background Hover - Padding Suitable for Icon Size - Width 100%
+  // =====================
+  &.buttonType2 {
+    background-color: rgb($neutral400, 0.1);
+    border-radius: 10px;
+    border: 1px solid $neutral600;
+    padding: 0.5rem;
+    transition: 0.3s;
+    width: 100%;
+
+    &:hover {
+      background-color: $primary;
+      color: $neutral100;
+      border: 1px solid $primary;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // TYPE 3 - Orange Background Hover - Padding Suitable for Icon Size - Width Fit Content
+  // =====================
+  &.buttonType3 {
+    background-color: rgb($neutral400, 0.1);
+    border-radius: 10px;
+    border: 1px solid $neutral600;
+    padding: 0.5rem;
+    transition: 0.3s;
+
+    &:hover {
+      background-color: $primary;
+      color: $neutral100;
+      border: 1px solid $primary;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // TYPE 4 - Black Background Orange Hover - Padding Suitable for Icon Size - Width 100%
+  // =====================
+  &.buttonType4 {
+    background-color: $neutral900;
+    color: $neutral100;
+    border-radius: 10px;
+    border: 1px solid $neutral600;
+    padding: 0.5rem;
+    transition: 0.3s;
+    width: 100%;
+
+    &:hover {
+      background-color: $primary;
+      color: $neutral100;
+      border: 1px solid $primary;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // TYPE 5 - Black Background Orange Hover - Padding Suitable for Icon Size - Width Fit Content
+  // =====================
+  &.buttonType5 {
+    background-color: $neutral900;
+    color: $neutral100;
+    border-radius: 10px;
+    border: 1px solid $neutral600;
+    padding: 0.5rem;
+    transition: 0.3s;
+    width: fit-content;
+
+    &:hover {
+      background-color: $primary;
+      color: $neutral100;
+      border: 1px solid $primary;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // TYPE APPROVE - Green Background Hover - Padding Large - Width Fit Content
+  // =====================
+  &.buttonTypeApprove {
+    background-color: rgb($success600, 0.1);
+    border-radius: 10px;
+    border: 1px solid $success600;
+    padding: 0.8rem 1.2rem;
+    transition: 0.3s;
+    color: $success600;
+
+    &:hover {
+      background-color: $success600;
+      color: $neutral100;
+      border: 1px solid $success600;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // TYPE DELETE - Red Background Hover - Padding Large - Width Fit Content
+  // =====================
+  &.buttonTypeDelete {
+    background-color: rgb($error600, 0.1);
+    border-radius: 10px;
+    border: 1px solid $error600;
+    padding: 0.8rem 1.2rem;
+    transition: 0.3s;
+    color: $error600;
+
+    &:hover {
+      background-color: $error600;
+      color: $neutral100;
+      border: 1px solid $error600;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // TYPE DELETE 2 - Red Background Hover - Padding Small - Width Fit Content
+  // =====================
+  &.buttonTypeDelete2 {
+    background-color: rgb($error600, 0.1);
+    border-radius: 10px;
+    border: 1px solid $error600;
+    padding: 0.4rem;
+    transition: 0.3s;
+    color: $error600;
+
+    &:hover {
+      background-color: $error600;
+      color: $neutral100;
+      border: 1px solid $error600;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // CHECKIN BUTTON CIRCLE - Green Background Hover - Padding Suitable for Icon Size - Width 100%
+  // =====================
+  &.buttonTypeClockin {
+    background-color: rgb($success600, 0.1);
+    border-radius: 50%;
+    border: 1px solid $success600;
+    padding: 0.5rem;
+    transition: 0.3s;
+    width: fit-content;
+    color: $success600;
+
+    &:hover {
+      background-color: $success600;
+      color: $neutral100;
+      border: 1px solid $success600;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // CHECKIN BUTTON - Green Background Hover - Padding Suitable for Icon Size - Width 100%
+  // =====================
+  &.buttonType2Clockin {
+    background-color: rgb($success600, 0.1);
+    border-radius: 10px;
+    border: 1px solid $success600;
+    padding: 0.5rem;
+    transition: 0.3s;
+    width: 100%;
+    color: $success600;
+
+    &:hover {
+      background-color: $success600;
+      color: $neutral100;
+      border: 1px solid $success600;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // CHECKOUT BUTTON - Yellow Background Hover - Padding Suitable for Icon Size - Width 100%
+  // =====================
+  &.buttonType2Clockout {
+    background-color: rgb($warning600, 0.1);
+    border-radius: 10px;
+    border: 1px solid $warning600;
+    padding: 0.5rem;
+    transition: 0.3s;
+    width: 100%;
+    color: $warning600;
+
+    &:hover {
+      background-color: $warning600;
+      color: $neutral100;
+      border: 1px solid $warning600;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // CHECKOUT BUTTON CIRCLE - Yellow Background Hover - Padding Suitable for Icon Size - Width 100%
+  // =====================
+  &.buttonTypeClockout {
+    background-color: rgb($warning600, 0.1);
+    border-radius: 50%;
+    border: 1px solid $warning600;
+    padding: 0.5rem;
+    transition: 0.3s;
+    width: fit-content;
+    color: $warning600;
+
+    &:hover {
+      background-color: $warning600;
+      color: $neutral100;
+      border: 1px solid $warning600;
+      transition: 0.3s;
+    }
+  }
+
+  // =====================
+  // TAB BUTTON
+  // =====================
+  &.buttonTypeTab {
+    padding: 0.3rem 0.8rem;
+    border-radius: 30px;
+
+    &.active {
+      background-color: $neutral900;
+      color: $neutral100;
+      border: 1px solid $neutral700;
+    }
+  }
+
+  // =====================
+  // MAIN HOVER, DISABLED, ACTIVE, GREEN AND RED STYLES
+  // =====================
+  &:hover {
+    background-color: rgb($neutral400, 0.1);
+    color: $primary;
+    border: 1px solid $primary;
+    transition: 0.3s;
+  }
+
+  &:disabled {
+    color: $neutral600;
+
+    &:hover {
+      border: 1px solid $neutral600;
+      cursor: not-allowed;
+    }
+  }
+
+  &.mobile {
+    @media screen and (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  &.active {
+    border: 1px solid $primary;
+    background-color: $primary;
+    color: $neutral100;
+  }
+
+  // RED
+  &.rejection {
+    background-color: rgb($error600, 0.1);
+    border: 1px solid $error600;
+    transition: 0.3s;
+    color: $error600;
+
+    &:hover {
+      background-color: $error600;
+      color: $neutral100;
+      border: 1px solid $error600;
+      transition: 0.3s;
+    }
+
+    &.active {
+      background-color: $error600;
+      color: $neutral100;
+      border: 1px solid $error600;
+      transition: 0.3s;
+    }
+
+    &:disabled {
+      color: $neutral600;
+      border: 1px solid $neutral600;
+
+      &:hover {
+        border: 1px solid $neutral600;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // GREEN
+  &.approval {
+    background-color: rgb($success600, 0.1);
+    border: 1px solid $success600;
+    transition: 0.3s;
+    color: $success600;
+
+    &:hover {
+      background-color: $success600;
+      color: $neutral100;
+      border: 1px solid $success600;
+      transition: 0.3s;
+    }
+
+    &.active {
+      background-color: $success600;
+      color: $neutral100;
+      border: 1px solid $success600;
+      transition: 0.3s;
+    }
+
+    &:disabled {
+      color: $neutral600;
+      border: 1px solid $neutral600;
+
+      &:hover {
+        border: 1px solid $neutral600;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // YELLOW
+  &.yellow {
+    background-color: rgb($warning600, 0.1);
+    border: 1px solid $warning600;
+    transition: 0.3s;
+    color: $warning600;
+
+    &:hover {
+      background-color: $warning600;
+      color: $neutral100;
+      border: 1px solid $warning600;
+      transition: 0.3s;
+    }
+
+    &.active {
+      background-color: $warning600;
+      color: $neutral100;
+      border: 1px solid $warning600;
+      transition: 0.3s;
+    }
+
+    &:disabled {
+      color: $neutral600;
+      border: 1px solid $neutral600;
+
+      &:hover {
+        border: 1px solid $neutral600;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  // BLUE
+  &.blue {
+    background-color: rgb($info600, 0.1);
+    border: 1px solid $info600;
+    transition: 0.3s;
+    color: $info600;
+
+    &:hover {
+      background-color: $info600;
+      color: $neutral100;
+      border: 1px solid $info600;
+      transition: 0.3s;
+    }
+
+    &.active {
+      background-color: $info600;
+      color: $neutral100;
+      border: 1px solid $info600;
+      transition: 0.3s;
+    }
+
+    &:disabled {
+      color: $neutral600;
+      border: 1px solid $neutral600;
+
+      &:hover {
+        border: 1px solid $neutral600;
+        cursor: not-allowed;
+      }
+    }
+  }
+}

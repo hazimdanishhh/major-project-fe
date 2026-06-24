@@ -1,0 +1,48 @@
+import { CopyIcon } from "@phosphor-icons/react";
+import Button from "../../buttons/button/Button";
+import { useMessage } from "../../../context/MessageContext";
+
+export default function TextareaEditor({
+  value,
+  onChange,
+  onBlur,
+  required,
+  readOnly,
+}) {
+  const { showMessage } = useMessage();
+
+  const handleCopy = async () => {
+    if (!value) return;
+
+    try {
+      await navigator.clipboard.writeText(value);
+      showMessage("Copied to Clipboard", "success");
+    } catch (err) {
+      console.error("Failed to copy:", err);
+      showMessage(`Failed to copy: ${err}`, "error");
+    }
+  };
+
+  return (
+    <div className="editorContainer">
+      <textarea
+        value={value ?? ""}
+        onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
+        required={required}
+        readOnly={readOnly}
+        style={{ resize: "none", height: "auto" }}
+        rows={4}
+      />
+      {value && (
+        <Button
+          onClick={handleCopy}
+          icon={CopyIcon}
+          style="iconButton2"
+          size={16}
+          type="button"
+        />
+      )}
+    </div>
+  );
+}

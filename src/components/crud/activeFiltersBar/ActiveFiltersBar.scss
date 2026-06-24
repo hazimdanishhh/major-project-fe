@@ -1,0 +1,35 @@
+.activeFiltersBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.filterTag {
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid $neutral500;
+  background-color: rgba($neutral300, 0.5);
+
+  &:hover {
+    background-color: $error600;
+    color: $neutral100;
+    border: 1px solid $error600;
+    transition: 0.3s;
+  }
+}
+
+.clearAllBtn {
+  gap: 6px;
+  padding: 4px 10px;
+  color: $error600;
+  background-color: rgb($error600, 0.1);
+  border: 1px solid $error600;
+
+  &:hover {
+    background-color: $error600;
+    color: $neutral100;
+    border: 1px solid $error600;
+    transition: 0.3s;
+  }
+}

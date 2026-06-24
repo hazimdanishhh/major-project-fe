@@ -1,0 +1,173 @@
+.cardLayout5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.8rem;
+  // padding: 0.8rem;
+  width: 100%;
+
+  @media screen and (max-width: 1280px) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.4rem;
+  }
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 425px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.cardLayout4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.8rem;
+  // padding: 0.8rem;
+  width: 100%;
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (max-width: 425px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.cardLayout3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  // padding: 0.8rem;
+  width: 100%;
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+
+  @media screen and (max-width: 768px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.cardLayout2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+  gap: 0.8rem;
+  // padding: 0.8rem;
+
+  @media screen and (max-width: 1024px) {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 0.4rem;
+  }
+}
+
+.cardLayout1 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  // padding: 0.8rem;
+  width: 100%;
+
+  @media screen and (max-width: 1024px) {
+    gap: 0.4rem;
+  }
+}
+
+.cardPadding {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: fit-content;
+  gap: 0.8rem;
+  padding: 0.8rem;
+}
+
+.cardGapLarge {
+  gap: 1.3rem;
+}
+
+.cardGapMedium {
+  gap: 0.8rem;
+}
+
+.cardGapSmall {
+  gap: 0.4rem;
+}
+
+.cardLayoutFlex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8rem;
+}
+
+.cardLayoutFlexFull {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 0.8rem;
+}
+
+.cardLayoutFlexStart {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 100%;
+  padding: 0.8rem;
+}
+
+.cardLayoutFlexWrap {
+  flex-wrap: wrap;
+}
+
+.cardLayoutMobileColumn {
+  @media screen and (max-width: 425px) {
+    flex-direction: column;
+  }
+}
+
+.cardLayoutNoPadding {
+  padding: 0;
+}
+
+.cardLayoutStickyTop {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.cardLayoutSpaceBetween {
+  justify-content: space-between;
+}
+
+.cardLayoutFlexRow {
+  flex-direction: row;
+}
+
+.cardPaddingSmall {
+  padding: 0.4rem;
+}
+
+.cardLayoutEnd {
+  justify-content: end;
+}
+
+.cardLayoutStart {
+  justify-content: start;
+}
