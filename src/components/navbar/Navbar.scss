@@ -9,6 +9,8 @@
   height: 70px;
   border-bottom: 1px solid $dark;
   z-index: 1800;
+  backdrop-filter: blur(3px);
+  background-color: rgb($neutral100, 0.5);
 
   .navbarSegment {
     display: flex;

@@ -4,10 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser, fetchMe } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 import "./LoginPage.scss";
+import { useMessage } from "../../context/MessageContext";
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
+  const { showMessage } = useMessage();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -20,6 +22,7 @@ export default function LoginPage() {
     try {
       // 1. Login via Supabase SDK
       await loginUser({ email, password });
+      showMessage("Logging in...", "loading");
 
       // 2. GET /api/auth/me to get role + profile
       const { user: profile } = await fetchMe();
@@ -32,15 +35,17 @@ export default function LoginPage() {
         member: "/member/tasks",
       };
       navigate(home[profile.role] ?? "/dashboard", { replace: true });
+      showMessage("Logged in successfully", "success");
     } catch (err) {
       setError(err.message);
+      showMessage("Error logging in", "error");
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <section className="sectionDark">
+    <section className="sectionLight">
       <div className="sectionWrapper loginCardWrapper">
         <div className="loginCardContainer">
           <div className="loginCardHeader">
@@ -49,37 +54,25 @@ export default function LoginPage() {
             <p className="textXXS textLight">Welcome back!</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="loginCardForm">
             <div>
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                htmlFor="email"
-              >
-                Email
-              </label>
+              <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label
-                className="block text-sm font-medium text-gray-700 mb-1"
-                htmlFor="password"
-              >
-                Password
-              </label>
+              <label htmlFor="password">Password</label>
               <input
                 type="password"
                 id="password"
                 name="password"
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="••••••••"
               />
             </div>
@@ -87,15 +80,15 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+              className="button buttonType4"
             >
               {loading ? "Logging in..." : "Login"}
             </button>
           </form>
 
-          <p className="mt-4 text-center text-sm text-gray-600">
+          <p className="textS textLight">
             Don't have an account?{" "}
-            <Link to="/register" className="text-blue-600 hover:underline">
+            <Link to="/register" className="textBold">
               Register here
             </Link>
           </p>

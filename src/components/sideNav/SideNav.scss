@@ -134,12 +134,25 @@
   }
 }
 
-.attendanceActivityLatestContainer {
+.sideNavFooter {
   display: flex;
+  flex-direction: column;
   gap: 0.4rem;
-  justify-content: space-between;
 
-  p {
-    flex: 1;
+  .sideNavUserInfo {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem;
+
+    .sideNavRole {
+      border: 1px solid $success600;
+      width: fit-content;
+      padding: 0.3rem;
+      border-radius: 0.3rem;
+      background-color: $success600;
+      color: $neutral100;
+    }
   }
 }

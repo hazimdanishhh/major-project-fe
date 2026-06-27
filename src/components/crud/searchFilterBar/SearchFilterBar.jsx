@@ -5,10 +5,9 @@ import "./SearchFilterBar.scss";
 import { FunnelIcon, MagnifyingGlassIcon, XIcon } from "@phosphor-icons/react";
 import { AnimatePresence, motion } from "framer-motion";
 import Select from "react-select";
-import CardLayout from "../cardLayout/CardLayout";
-import AsyncSelectEditor from "../dataTable/editors/AsyncSelectEditor";
-import Button from "../buttons/button/Button";
-import { useTheme } from "../../context/ThemeContext";
+import CardLayout from "../../cardLayout/CardLayout";
+import AsyncSelectEditor from "../../dataTable/editors/AsyncSelectEditor";
+import Button from "../../buttons/button/Button";
 
 export default function SearchFilterBar({
   search,
@@ -20,7 +19,6 @@ export default function SearchFilterBar({
   enableDateRange,
   disableSearch,
 }) {
-  const { darkMode } = useTheme();
   const [filterOpen, setFilterOpen] = useState(false);
   const [searchInput, setSearchInput] = useState(search || "");
   const [asyncValues, setAsyncValues] = useState({});

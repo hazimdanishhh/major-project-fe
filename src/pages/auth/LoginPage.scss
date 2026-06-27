@@ -11,7 +11,8 @@
     width: 450px;
     height: fit-content;
     padding: 2rem;
-    background-color: $dark;
+    background-color: $neutral200;
+    border: 1px solid $neutral400;
     border-radius: 30px;
 
     @media screen and (max-width: 768px) {
@@ -32,6 +33,12 @@
         border-radius: 1rem;
         border: 1px solid $neutral700;
       }
+    }
+
+    .loginCardForm {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
     }
   }
 }

@@ -1,17 +1,15 @@
 import { CaretLeftIcon, HouseIcon, WarningIcon } from "@phosphor-icons/react";
 import RouterButton from "../../components/buttons/routerButton/RouterButton";
-import { useTheme } from "../../context/ThemeContext";
 import CardLayout from "../../components/cardLayout/CardLayout";
 import "./Error404.scss";
 import Button from "../../components/buttons/button/Button";
 import { useNavigate } from "react-router";
 
 export default function Error404() {
-  const { darkMode } = useTheme();
   const navigate = useNavigate();
 
   return (
-    <section className={darkMode ? "sectionDark" : "sectionLight"}>
+    <section className="sectionLight">
       <div className="sectionWrapper">
         <div className="sectionContent">
           <div className="errorPageContent">
@@ -28,7 +26,7 @@ export default function Error404() {
             />
             <RouterButton
               name="Go Home"
-              to="/app/"
+              to="/"
               icon={HouseIcon}
               style="button buttonType4"
             />

@@ -1,84 +1,75 @@
+// src/components/sideNav/SideNav.jsx
+//
+// Stripped from the old project:
+//   - Removed ClockinMini (attendance feature)
+//   - Removed ThemeButton (add back once ThemeContext is set up)
+//   - Removed navModalVariant (add back once motionUtils is ported)
+//   - Uses AccessControlContext for filtered navigation
+//   - Uses useAuth for logout
+
+import { SidebarSimpleIcon, SignOutIcon } from "@phosphor-icons/react";
+import { useState } from "react";
+import { useAccessControl } from "../../context/AccessControlContext";
+import { useAuth } from "../../context/AuthContext";
+import Button from "../buttons/button/Button";
 import "./SideNav.scss";
-import { AnimatePresence, motion } from "framer-motion";
-import {
-  CalendarDotsIcon,
-  ClockUserIcon,
-  SidebarSimpleIcon,
-  SignInIcon,
-  SignOutIcon,
-} from "@phosphor-icons/react";
-import { navModalVariant } from "../../../../../Hyrax Oil Web Apps/hyrax-central-portal/src/functions/motionUtils";
-import { useRef, useState } from "react";
-import { useTheme } from "../../../../../Hyrax Oil Web Apps/hyrax-central-portal/src/context/ThemeContext";
-import { sideNavLinkData } from "../../../../../Hyrax Oil Web Apps/hyrax-central-portal/src/data/sideNavLinkData";
 import SideNavLink from "./sideNavLink/SideNavLink";
-import ThemeButton from "../../../../../Hyrax Oil Web Apps/hyrax-central-portal/src/components/buttons/themeButton/ThemeButton";
-import LogoutButton from "../../../../../Hyrax Oil Web Apps/hyrax-central-portal/src/components/buttons/logoutButton/LogoutButton";
-import ClockinMini from "../../../../../Hyrax Oil Web Apps/hyrax-central-portal/src/components/attendanceActivityClockin/clockinMini/ClockinMini";
-import { useAccessControl } from "../../../../../Hyrax Oil Web Apps/hyrax-central-portal/src/context/AccessControlContext";
-import LoadingIcon from "../loadingIcon/LoadingIcon";
-import CardLayout from "../cardLayout/CardLayout";
 
 export default function SideNav() {
   const [navIsOpen, setNavIsOpen] = useState(true);
-  const { darkMode, toggleMode } = useTheme();
-  const navModalRef = useRef(null);
-  const { navigation, loading: accessLoading } = useAccessControl();
+  const { navigation, loading } = useAccessControl();
+  const { logout, user } = useAuth();
 
   return (
-    <>
-      <motion.div
-        className={`sideNav ${darkMode ? "sectionDark" : "sectionLight"} ${
-          !navIsOpen ? "close" : ""
-        }`}
-        variants={navModalVariant}
-        ref={navModalRef}
-      >
-        {/* HEADER */}
-        <div className="sideNavSegment">
-          {/* DARK MODE + OPEN CLOSE SIDENAV */}
-          <div
-            className={`sideNavLogoContainer ${!navIsOpen ? "isClosed" : ""} ${
-              darkMode ? "sectionDark" : "sectionLight"
-            }`}
+    <div className={`sideNav ${!navIsOpen ? "close" : ""}`}>
+      {/* ── Header ─────────────────────────────────────────────────────── */}
+      <div className="sideNavSegment">
+        <div className={`sideNavLogoContainer ${!navIsOpen ? "isClosed" : ""}`}>
+          <button
+            onClick={() => setNavIsOpen(!navIsOpen)}
+            className="navButtonType1"
+            aria-label="Toggle sidebar"
           >
-            {navIsOpen && <ThemeButton style="iconButton" />}
-            <button
-              onClick={() => setNavIsOpen(!navIsOpen)}
-              className="navButtonType1"
-            >
-              <SidebarSimpleIcon size="24" />
-            </button>
+            <SidebarSimpleIcon size="24" />
+          </button>
+        </div>
+
+        {/* ── Nav segments ─────────────────────────────────────────────── */}
+        {loading ? (
+          <div className="sideNavLoading">
+            <div className="loadingCard" />
+            <div className="loadingCard" />
+            <div className="loadingCard" />
           </div>
-
-          {/* ATTENDANCE ACTIVITY BUTTON */}
-          <ClockinMini navIsOpen={navIsOpen} />
-
-          {/* NAV SEGMENTS */}
-          {accessLoading ? (
-            <CardLayout>
-              <div className="loadingCard" />
-              <div className="loadingCard" />
-              <div className="loadingCard" />
-            </CardLayout>
-          ) : (
-            <div>
-              {navigation.map((segment, index) => (
-                <div key={index}>
-                  <div className="sideNavLinkLayout">
-                    <SideNavLink segment={segment} navIsOpen={navIsOpen} />
-                  </div>
-                  <hr className="sideNavLinkHr" />
+        ) : (
+          <div>
+            {navigation.map((segment, index) => (
+              <div key={index}>
+                <div className="sideNavLinkLayout">
+                  <SideNavLink segment={segment} navIsOpen={navIsOpen} />
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+                <hr className="sideNavLinkHr" />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
 
-        <div className="sideNavButtons">
-          <LogoutButton navIsOpen={navIsOpen} style="button buttonType2" />
-        </div>
-      </motion.div>
-    </>
+      {/* ── Footer: user info + logout ───────────────────────────────────── */}
+      <div className="sideNavFooter">
+        {navIsOpen && (
+          <div className="sideNavUserInfo">
+            <p className="textXXS textBold">{user?.full_name}</p>
+            <p className="textXXXS textLight sideNavRole">{user?.role}</p>
+          </div>
+        )}
+        <Button
+          style="button buttonType2 textXXS"
+          onClick={logout}
+          name={navIsOpen && "Log out"}
+          icon={SignOutIcon}
+        />
+      </div>
+    </div>
   );
 }
