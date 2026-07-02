@@ -26,6 +26,24 @@ export default function StatusBadge({ status }) {
     rejected: "rejected",
 
     onHold: "ON HOLD",
+
+    // Project Status
+    on_hold: "pending",
+    completed: "approved",
+    archived: "retired",
+
+    // Requirement FSM Status
+    draft: "retired",
+    submitted: "pending",
+    under_analysis: "pending",
+    specification_drafted: "pending",
+    client_validation: "pending",
+    implementation: "active",
+    // "approved" and "completed" keys above already cover the rest.
+
+    // Specification Status
+    final: "approved",
+    // "draft" key above already covers the rest.
   };
 
   const normalizedStatus = status?.toLowerCase();

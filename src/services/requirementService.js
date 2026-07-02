@@ -33,7 +33,8 @@ import { apiClient } from "../lib/apiClient";
 // Response: { requirements: Requirement[] }
 // Requirement list shape: { id, title, description, status, current_version,
 //                           created_at, updated_at,
-//                           created_by: { id, full_name } }
+//                           created_by: { id, full_name },
+//                           requirement_specifications: Spec[] }
 export async function fetchRequirements({ project_id, status } = {}) {
   const params = new URLSearchParams();
   if (project_id) params.set("project_id", project_id);

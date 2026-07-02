@@ -1,0 +1,27 @@
+.requirementCard {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  &.specificationCard {
+    flex-direction: row;
+  }
+
+  .requirementCardLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+
+    .requirementCardHeader {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+  }
+
+  .requirementCardRight {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+}

@@ -1,16 +1,19 @@
 // src/pages/authorized/projects/ProjectsPage.jsx
 
+import { useState } from "react";
 import { FolderPlusIcon } from "@phosphor-icons/react";
 import { useAccessControl } from "../../../context/AccessControlContext";
 
 // --- Hooks & Services ---
 import usePaginatedQuery from "../../../hooks/usePaginatedQuery";
+import { useProjectMutations } from "../../../hooks/useProjects";
 import { fetchProjects } from "../../../services/projectService";
 
 // --- Components ---
 import Button from "../../../components/buttons/button/Button";
 import CardLayout from "../../../components/cardLayout/CardLayout";
 import ActiveFiltersBar from "../../../components/crud/activeFiltersBar/ActiveFiltersBar";
+import DataSidebar from "../../../components/dataSidebar/DataSidebar";
 import NoResult from "../../../components/crud/noResult/NoResult";
 import PageHeader from "../../../components/crud/pageHeader/PageHeader";
 import PageResult from "../../../components/crud/pageResult/PageResult";
@@ -20,9 +23,12 @@ import LoadingIcon from "../../../components/loadingIcon/LoadingIcon";
 import ProjectCard from "../../../components/projects/projectCard/ProjectCard";
 import { getFilterConfig } from "./config/filterConfig";
 import { getSortConfig } from "./config/sortConfig";
+import { getProjectColumns } from "./config/projectFormConfig";
 
 export default function ProjectsPage() {
   const { canAccess, isPm } = useAccessControl();
+  const [creatingProject, setCreatingProject] = useState(false);
+  const { createProject, creating } = useProjectMutations();
 
   // =========================
   // DATA FETCHING
@@ -61,7 +67,14 @@ export default function ProjectsPage() {
 
   const hasData = projects?.length > 0;
 
-  console.log(projects);
+  async function handleSaveProject(formData) {
+    await createProject({
+      name: formData.name,
+      description: formData.description,
+      client_id: formData.client_id?.value,
+    });
+    setCreatingProject(false);
+  }
 
   return (
     <div className="pageLayout">
@@ -88,7 +101,7 @@ export default function ProjectsPage() {
           {canAccess({ roles: ["pm"] }) && (
             <Button
               style="button buttonType5 approval textXXS"
-              onClick={() => console.log("New project clicked - coming soon")}
+              onClick={() => setCreatingProject(true)}
               name="New Project"
               icon2={FolderPlusIcon}
               weight="fill"
@@ -147,6 +160,21 @@ export default function ProjectsPage() {
           </CardLayout>
         )}
       </CardLayout>
+
+      {creatingProject && (
+        <DataSidebar
+          title="New Project"
+          icon={FolderPlusIcon}
+          open
+          onClose={() => setCreatingProject(false)}
+          rowData={{}}
+          columns={getProjectColumns()}
+          onSave={handleSaveProject}
+          onCancel={() => setCreatingProject(false)}
+          creating
+          saving={creating}
+        />
+      )}
     </div>
   );
 }

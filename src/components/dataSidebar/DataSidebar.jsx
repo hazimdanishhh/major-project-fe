@@ -8,7 +8,6 @@ import SectionHeader from "../sectionHeader/SectionHeader";
 import { motion } from "framer-motion";
 import DataForm from "../crud/dataForm/DataForm";
 import Button from "../buttons/button/Button";
-import { useTheme } from "../../context/ThemeContext";
 
 export default function DataSidebar({
   title,
@@ -28,8 +27,6 @@ export default function DataSidebar({
   onCancel,
   fullPage = false,
 }) {
-  const { darkMode } = useTheme();
-
   return (
     <motion.div
       className="dataSidebarOverlay"
@@ -40,7 +37,7 @@ export default function DataSidebar({
       transition={{ duration: 0.2 }}
     >
       <motion.div
-        className={`dataSidebar ${darkMode ? "sectionDark" : "sectionLight"} ${fullPage ? "fullPage" : ""}`}
+        className={`dataSidebar sectionLight ${fullPage ? "fullPage" : ""}`}
         initial={{ x: "100%", opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
         exit={{ x: "100%", opacity: 0 }}
@@ -52,13 +49,7 @@ export default function DataSidebar({
         onClick={(e) => e.stopPropagation()}
       >
         <CardLayout>
-          <header
-            className={
-              darkMode
-                ? "sectionDark dataSidebarHeader"
-                : "sectionLight dataSidebarHeader"
-            }
-          >
+          <header className="sectionLight dataSidebarHeader">
             <SectionHeader title={title} icon={icon} />
             <Button icon={XIcon} style="iconButton" onClick={onClose} />
           </header>

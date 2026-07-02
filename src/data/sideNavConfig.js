@@ -83,12 +83,6 @@ export const sideNavConfig = [
     segmentCode: "TOOLS",
     links: [
       {
-        label: "Traceability",
-        icon: ChartBarIcon,
-        path: "traceability",
-        roles: ["pm"],
-      },
-      {
         label: "Team",
         icon: UsersIcon,
         path: "team",

@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useTheme } from "../../../context/ThemeContext";
 import {
   CheckIcon,
   PencilSimpleIcon,
@@ -30,7 +29,6 @@ function DataForm({
   inlineForm = false,
   title,
 }) {
-  const { darkMode } = useTheme();
   const { showMessage } = useMessage();
 
   // ==============
@@ -225,9 +223,7 @@ function DataForm({
 
       {/* SIDEBAR FOOTER */}
       {!inlineForm && (
-        <footer
-          className={`dataSidebarFooter ${darkMode ? "sectionDark" : "sectionLight"}`}
-        >
+        <footer className={`dataSidebarFooter sectionLight`}>
           {!creating && (
             <Button
               name="Cancel"

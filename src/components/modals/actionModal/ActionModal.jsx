@@ -3,7 +3,6 @@ import "./ActionModal.scss";
 import { useEffect, useState } from "react";
 import { XIcon } from "@phosphor-icons/react";
 import Button from "../../buttons/button/Button";
-import { useTheme } from "../../../context/ThemeContext";
 
 export default function ActionModal({
   open,
@@ -17,7 +16,6 @@ export default function ActionModal({
   modalType,
   fields = [], // NEW: Array of field configurations
 }) {
-  const { darkMode } = useTheme();
   const [formValues, setFormValues] = useState({});
 
   // Reset and initialize dynamic fields when modal opens
@@ -59,9 +57,7 @@ export default function ActionModal({
         exit={{ opacity: 0 }}
       >
         <motion.div
-          className={
-            darkMode ? "modalContent sectionDark" : "modalContent sectionLight"
-          }
+          className="modalContent sectionLight"
           onClick={(e) => e.stopPropagation()}
           initial={{ scale: 0.95, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
