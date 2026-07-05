@@ -1,0 +1,26 @@
+.searchInputWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid $neutral300;
+  border-radius: 6px;
+  width: 100%;
+  max-width: 320px;
+
+  input {
+    border: none;
+    outline: none;
+    font-size: 14px;
+    background: transparent;
+    padding: 0;
+    width: 100%;
+  }
+}
+
+.teamMemberCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

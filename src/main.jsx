@@ -41,6 +41,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/reactQuery";
 import ProjectDetailPage from "./pages/authorized/projects/detail/ProjectDetailPage";
 import ProjectDetailLayout from "./pages/authorized/projects/detail/ProjectDetailLayout";
+import TeamPage from "./pages/authorized/team/TeamPage";
 // import ProjectDetailPage from "./pages/authorized/projects/ProjectDetailPage";
 // import TasksPage from "./pages/authorized/tasks/TasksPage";
 // import DashboardPage from "./pages/authorized/dashboard/DashboardPage";
@@ -103,6 +104,7 @@ createRoot(document.getElementById("root")).render(
                 {/* <Route path="tasks" element={<TasksPage />} /> */}
                 {/* <Route path="traceability" element={<TraceabilityPage />} /> */}
                 {/* <Route path="dashboard" element={<DashboardPage />} /> */}
+                <Route path="team" element={<TeamPage />} />
                 <Route path="*" element={<Error404 />} />
               </Route>
 

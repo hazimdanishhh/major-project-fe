@@ -1,0 +1,39 @@
+.historyPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 0.8rem;
+
+  .historySection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .historyRow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid $neutral400;
+    width: 100%;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .historyRowHeader {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .historyRowDescription {
+      white-space: pre-wrap;
+    }
+
+    .historyRowMeta {
+      margin-top: 0.1rem;
+    }
+  }
+}

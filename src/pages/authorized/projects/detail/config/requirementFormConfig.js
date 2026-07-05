@@ -65,19 +65,7 @@ export function getSpecColumns() {
       step: 1,
       accessor: "complexity_score",
     },
-    {
-      key: "status",
-      label: "Status",
-      section: "Specification",
-      editor: "select",
-      required: true,
-      editable: true,
-      half: true,
-      options: [
-        { label: "Draft", value: "DRAFT" },
-        { label: "Final", value: "FINAL" },
-      ],
-      accessor: "status",
-    },
+    // status is server/FSM-managed (auto FINAL on CLIENT_VALIDATION, auto
+    // DRAFT on revert to UNDER_ANALYSIS) — not an editable field here.
   ];
 }

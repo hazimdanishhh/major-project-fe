@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   ClipboardTextIcon,
+  ClockCounterClockwiseIcon,
   FileTextIcon,
   PencilSimpleIcon,
   PlusCircleIcon,
@@ -17,6 +18,8 @@ import { useMessage } from "../../../../context/MessageContext";
 import {
   useRequirements,
   useRequirementMutations,
+  useRequirementVersions,
+  useRequirementHistory,
   REQUIREMENT_STATUS_TRANSITIONS,
   SPEC_ALLOWED_STATUSES,
 } from "../../../../hooks/useRequirements";
@@ -24,6 +27,7 @@ import {
   getRequirementColumns,
   getSpecColumns,
 } from "./config/requirementFormConfig";
+import RequirementHistoryPanel from "./components/RequirementHistoryPanel";
 import "./ProjectDetailPage.scss";
 import PageHeader from "../../../../components/crud/pageHeader/PageHeader";
 import SectionHeader from "../../../../components/sectionHeader/SectionHeader";
@@ -55,6 +59,18 @@ function ProjectDetailPage() {
   const [specSidebar, setSpecSidebar] = useState(null);
   // { requirement: requirementRow, transition: { status, label, tone } }
   const [statusModal, setStatusModal] = useState(null);
+  // { requirement: requirementRow }
+  const [historySidebar, setHistorySidebar] = useState(null);
+
+  // Fetched once here (not per-card) and only while the history panel is open.
+  const { versions, isLoading: loadingVersions } = useRequirementVersions(
+    historySidebar?.requirement?.id,
+    { enabled: !!historySidebar },
+  );
+  const { history, isLoading: loadingHistory } = useRequirementHistory(
+    historySidebar?.requirement?.id,
+    { enabled: !!historySidebar },
+  );
 
   async function handleSaveRequirement(formData) {
     const payload = {
@@ -94,7 +110,6 @@ function ProjectDetailPage() {
         formData.complexity_score === "" || formData.complexity_score == null
           ? undefined
           : Number(formData.complexity_score),
-      status: formData.status || undefined,
     };
     if (specSidebar.mode === "create") {
       await createSpec({
@@ -152,9 +167,9 @@ function ProjectDetailPage() {
               </div>
 
               {/* STATUS CHANGE BUTTONS */}
-              {canAccess({ roles: ["pm", "client"] }) && (
-                <div className="requirementCardRight">
-                  {transitions.map((t) => (
+              <div className="requirementCardRight">
+                {canAccess({ roles: ["pm", "client"] }) &&
+                  transitions.map((t) => (
                     <Button
                       key={t.status}
                       style={`button buttonType5 ${t.tone === "forward" ? "approval" : "rejection"} textXXS`}
@@ -165,6 +180,7 @@ function ProjectDetailPage() {
                       weight="fill"
                     />
                   ))}
+                {canAccess({ roles: ["pm", "client"] }) && (
                   <Button
                     style="button buttonType5 textXXS"
                     onClick={() =>
@@ -174,8 +190,15 @@ function ProjectDetailPage() {
                     icon={PencilSimpleIcon}
                     weight="fill"
                   />
-                </div>
-              )}
+                )}
+                <Button
+                  style="button buttonType5 textXXS"
+                  onClick={() => setHistorySidebar({ requirement })}
+                  name="History"
+                  icon={ClockCounterClockwiseIcon}
+                  weight="fill"
+                />
+              </div>
             </div>
 
             {(requirement.requirement_specifications || []).length > 0 && (
@@ -303,6 +326,23 @@ function ProjectDetailPage() {
           creating={specSidebar.mode === "create"}
           saving={creatingSpec || updatingSpec}
         />
+      )}
+
+      {historySidebar && (
+        <DataSidebar
+          title={`History — ${historySidebar.requirement.title}`}
+          icon={ClockCounterClockwiseIcon}
+          open
+          isEditing={false}
+          onClose={() => setHistorySidebar(null)}
+        >
+          <RequirementHistoryPanel
+            versions={versions}
+            history={history}
+            loadingVersions={loadingVersions}
+            loadingHistory={loadingHistory}
+          />
+        </DataSidebar>
       )}
 
       {statusModal && (

@@ -137,8 +137,11 @@ export async function fetchRequirementHistory(requirementId) {
 
 // ─── Create specification (pm only) ──────────────────────────────────────────
 // Only allowed when requirement status is UNDER_ANALYSIS or SPECIFICATION_DRAFTED.
+// status is NOT a settable field — every spec is created DRAFT and the
+// backend auto-promotes it to FINAL when the requirement advances to
+// CLIENT_VALIDATION (see requirementController.js's updateRequirement).
 // Body: { description: string, title?: string, acceptance_criteria?: string,
-//          complexity_score?: number (0-10), status?: 'DRAFT' | 'FINAL' }
+//          complexity_score?: number (0-10) }
 // Response: { spec: Spec }
 // Spec shape: { id, requirement_id, title, description, acceptance_criteria,
 //               complexity_score, status, created_at, updated_at, created_by }
@@ -151,8 +154,8 @@ export async function createSpec(requirementId, specData) {
 
 // ─── Update specification (pm only) ──────────────────────────────────────────
 // Only allowed when requirement status is UNDER_ANALYSIS or SPECIFICATION_DRAFTED.
-// Body: any subset of { title, description, acceptance_criteria,
-//                       complexity_score, status }
+// status is NOT an updatable field here — it's system-managed (see createSpec above).
+// Body: any subset of { title, description, acceptance_criteria, complexity_score }
 // Response: { spec: Spec }
 export async function updateSpec(requirementId, specId, updates) {
   return apiClient(`/api/requirements/${requirementId}/specs/${specId}`, {

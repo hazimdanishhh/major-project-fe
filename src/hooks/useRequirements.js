@@ -7,6 +7,8 @@ import {
   archiveRequirement,
   createSpec,
   updateSpec,
+  fetchRequirementVersions,
+  fetchRequirementHistory,
 } from "../services/requirementService";
 import { useMessage } from "../context/MessageContext";
 
@@ -21,6 +23,8 @@ export const requirementKeys = {
     status ?? null,
   ],
   single: (id) => ["requirements", id],
+  versions: (id) => ["requirements", id, "versions"],
+  history: (id) => ["requirements", id, "history"],
 };
 
 // ─── Requirement FSM (frontend copy — kept in sync by hand with
@@ -78,6 +82,30 @@ export function useRequirements({ projectId, status } = {}) {
     isFetching,
     error,
   };
+}
+
+// ─── Version history ───────────────────────────────────────────────────────────
+// Fetched on demand (pass enabled: false until the history panel is opened) —
+// not needed on initial page load for every requirement card.
+export function useRequirementVersions(requirementId, { enabled = true } = {}) {
+  const { data, isLoading } = useQuery({
+    queryKey: requirementKeys.versions(requirementId),
+    queryFn: () => fetchRequirementVersions(requirementId),
+    enabled: !!requirementId && enabled,
+  });
+
+  return { versions: data?.versions ?? [], isLoading };
+}
+
+// ─── Status change (FSM) history ────────────────────────────────────────────────
+export function useRequirementHistory(requirementId, { enabled = true } = {}) {
+  const { data, isLoading } = useQuery({
+    queryKey: requirementKeys.history(requirementId),
+    queryFn: () => fetchRequirementHistory(requirementId),
+    enabled: !!requirementId && enabled,
+  });
+
+  return { history: data?.history ?? [], isLoading };
 }
 
 // ─── Mutations ────────────────────────────────────────────────────────────────
