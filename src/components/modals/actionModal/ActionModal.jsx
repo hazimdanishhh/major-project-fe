@@ -4,6 +4,12 @@ import { useEffect, useState } from "react";
 import { XIcon } from "@phosphor-icons/react";
 import Button from "../../buttons/button/Button";
 
+// Stable reference so callers that don't pass `fields` don't create a new
+// array every render — that would make the useEffect below see `fields` as
+// "changed" on every render and loop (setFormValues -> re-render -> new []
+// -> effect fires again -> ...), throwing "Maximum update depth exceeded".
+const EMPTY_FIELDS = [];
+
 export default function ActionModal({
   open,
   onClose,
@@ -14,7 +20,7 @@ export default function ActionModal({
   onConfirm,
   loading = false,
   modalType,
-  fields = [], // NEW: Array of field configurations
+  fields = EMPTY_FIELDS, // NEW: Array of field configurations
 }) {
   const [formValues, setFormValues] = useState({});
 
