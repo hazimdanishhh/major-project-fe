@@ -1,11 +1,12 @@
 import { supabase } from "../lib/supabaseClient";
 import { apiClient } from "../lib/apiClient";
 
-// Registration goes to Express backend (needs service-role to set role in profiles)
-export async function registerUser({ email, password, full_name, role }) {
+// Registration goes to Express backend. Client-only — the backend hardcodes
+// role: "client" regardless of what's sent, so there's no role param here.
+export async function registerUser({ email, password, full_name }) {
   return apiClient("/api/auth/register", {
     method: "POST",
-    body: { email, password, full_name, role },
+    body: { email, password, full_name },
   });
   // Returns { message, user: { id, email, full_name, role } }
 }

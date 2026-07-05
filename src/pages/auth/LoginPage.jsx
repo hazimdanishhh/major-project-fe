@@ -1,24 +1,29 @@
 // src/pages/auth/LoginPage.jsx
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import { loginUser, fetchMe } from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 import "./LoginPage.scss";
 import { useMessage } from "../../context/MessageContext";
 
+// Same email pattern as RegisterPage — kept in sync by hand.
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 export default function LoginPage() {
   const navigate = useNavigate();
   const { setUser } = useAuth();
   const { showMessage } = useMessage();
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    setError("");
-    setLoading(true);
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm({ mode: "onBlur" });
+
+  async function onSubmit({ email, password }) {
+    setSubmitError("");
     try {
       // 1. Login via Supabase SDK
       await loginUser({ email, password });
@@ -37,10 +42,8 @@ export default function LoginPage() {
       navigate(home[profile.role] ?? "/dashboard", { replace: true });
       showMessage("Logged in successfully", "success");
     } catch (err) {
-      setError(err.message);
+      setSubmitError(err.message);
       showMessage("Error logging in", "error");
-    } finally {
-      setLoading(false);
     }
   }
 
@@ -54,16 +57,23 @@ export default function LoginPage() {
             <p className="textXXS textLight">Welcome back!</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="loginCardForm">
+          <form onSubmit={handleSubmit(onSubmit)} className="loginCardForm" noValidate>
             <div>
               <label htmlFor="email">Email</label>
               <input
                 type="email"
                 id="email"
-                name="email"
-                required
                 placeholder="you@example.com"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: { value: EMAIL_PATTERN, message: "Invalid email address" },
+                  maxLength: {
+                    value: 254,
+                    message: "Email must be at most 254 characters",
+                  },
+                })}
               />
+              {errors.email && <p className="textXXS fieldError">{errors.email.message}</p>}
             </div>
 
             <div>
@@ -71,18 +81,28 @@ export default function LoginPage() {
               <input
                 type="password"
                 id="password"
-                name="password"
-                required
                 placeholder="••••••••"
+                {...register("password", {
+                  required: "Password is required",
+                  maxLength: {
+                    value: 128,
+                    message: "Password must be at most 128 characters",
+                  },
+                })}
               />
+              {errors.password && (
+                <p className="textXXS fieldError">{errors.password.message}</p>
+              )}
             </div>
+
+            {submitError && <p className="textXXS fieldError">{submitError}</p>}
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={isSubmitting}
               className="button buttonType4"
             >
-              {loading ? "Logging in..." : "Login"}
+              {isSubmitting ? "Logging in..." : "Login"}
             </button>
           </form>
 
