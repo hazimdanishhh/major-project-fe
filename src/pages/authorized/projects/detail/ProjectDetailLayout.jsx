@@ -16,12 +16,14 @@ import {
   FlowArrowIcon,
 } from "@phosphor-icons/react";
 import { useAccessControl } from "../../../../context/AccessControlContext";
+import { useMessage } from "../../../../context/MessageContext";
 
 export default function ProjectDetailLayout() {
   const { projectId } = useParams();
   const navigate = useNavigate();
   const { project, isLoading, error } = useProject(projectId);
   const { canAccess, isPm, isClient } = useAccessControl();
+  const { showMessage } = useMessage();
   const [editingProject, setEditingProject] = useState(false);
   const { updateProject, updating, archiveProject, archiving } =
     useProjectMutations();
@@ -136,7 +138,7 @@ export default function ProjectDetailLayout() {
               open
               onClose={() => setEditingProject(false)}
               rowData={project}
-              columns={getProjectColumns({ includeStatus: true })}
+              columns={getProjectColumns({ includeStatus: true, showMessage })}
               onSave={handleSaveProject}
               onDelete={handleArchiveProject}
               onCancel={() => setEditingProject(false)}

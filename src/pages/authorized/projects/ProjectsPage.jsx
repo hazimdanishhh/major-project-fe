@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { FolderPlusIcon } from "@phosphor-icons/react";
 import { useAccessControl } from "../../../context/AccessControlContext";
+import { useMessage } from "../../../context/MessageContext";
 
 // --- Hooks & Services ---
 import usePaginatedQuery from "../../../hooks/usePaginatedQuery";
@@ -27,6 +28,7 @@ import { getProjectColumns } from "./config/projectFormConfig";
 
 export default function ProjectsPage() {
   const { canAccess, isPm } = useAccessControl();
+  const { showMessage } = useMessage();
   const [creatingProject, setCreatingProject] = useState(false);
   const { createProject, creating } = useProjectMutations();
 
@@ -168,7 +170,7 @@ export default function ProjectsPage() {
           open
           onClose={() => setCreatingProject(false)}
           rowData={{}}
-          columns={getProjectColumns()}
+          columns={getProjectColumns({ showMessage })}
           onSave={handleSaveProject}
           onCancel={() => setCreatingProject(false)}
           creating

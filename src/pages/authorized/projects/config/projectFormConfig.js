@@ -3,7 +3,10 @@ import { fetchUsers, filterClients } from "../../../../services/userService";
 // Columns for the New/Edit Project DataForm.
 // `includeStatus` is false for create (status is server-set to ACTIVE on
 // creation — see projectController.createProject) and true for edit.
-export function getProjectColumns({ includeStatus = false } = {}) {
+// `showMessage` (from useMessage()) surfaces loadOptions failures — without
+// it, react-select's AsyncSelect silently swallows a rejected loadOptions
+// promise, so a failed fetch renders identically to "correctly empty."
+export function getProjectColumns({ includeStatus = false, showMessage } = {}) {
   return [
     {
       key: "name",
@@ -37,11 +40,16 @@ export function getProjectColumns({ includeStatus = false } = {}) {
           ? { label: rowData.client.full_name, value: rowData.client.id }
           : null,
       loadOptions: async (search) => {
-        const { users } = await fetchUsers();
-        const term = (search || "").toLowerCase();
-        return filterClients(users)
-          .filter((u) => u.full_name.toLowerCase().includes(term))
-          .map((u) => ({ label: u.full_name, value: u.id }));
+        try {
+          const { users } = await fetchUsers();
+          const term = (search || "").toLowerCase();
+          return filterClients(users)
+            .filter((u) => (u.full_name || "").toLowerCase().includes(term))
+            .map((u) => ({ label: u.full_name, value: u.id }));
+        } catch (err) {
+          showMessage?.(err.message, "error");
+          return [];
+        }
       },
     },
     {
