@@ -24,7 +24,7 @@ function TemporaryPasswordPanel({ user, temporaryPassword, onDone }) {
       </p>
 
       <div className="temporaryPasswordRow">
-        <StatusBox status={temporaryPassword} type="grey" />
+        <p className="temporaryPassword">{temporaryPassword}</p>
         <Button
           style="button buttonType5 textXXS"
           onClick={handleCopy}

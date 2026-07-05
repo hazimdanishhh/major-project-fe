@@ -42,8 +42,10 @@ import { queryClient } from "./lib/reactQuery";
 import ProjectDetailPage from "./pages/authorized/projects/detail/ProjectDetailPage";
 import ProjectDetailLayout from "./pages/authorized/projects/detail/ProjectDetailLayout";
 import TeamPage from "./pages/authorized/team/TeamPage";
+import TasksPage from "./pages/authorized/tasks/TasksPage";
+import ProjectTasksPage from "./pages/authorized/projects/detail/ProjectTasksPage";
+import MemberTasksPage from "./pages/authorized/tasks/MemberTasksPage";
 // import ProjectDetailPage from "./pages/authorized/projects/ProjectDetailPage";
-// import TasksPage from "./pages/authorized/tasks/TasksPage";
 // import DashboardPage from "./pages/authorized/dashboard/DashboardPage";
 // import TraceabilityPage from "./pages/authorized/traceability/TraceabilityPage";
 
@@ -100,8 +102,9 @@ createRoot(document.getElementById("root")).render(
                   element={<ProjectDetailLayout />}
                 >
                   <Route index element={<ProjectDetailPage />} />
+                  <Route path="tasks" element={<ProjectTasksPage />} />
                 </Route>
-                {/* <Route path="tasks" element={<TasksPage />} /> */}
+                <Route path="tasks" element={<TasksPage />} />
                 {/* <Route path="traceability" element={<TraceabilityPage />} /> */}
                 {/* <Route path="dashboard" element={<DashboardPage />} /> */}
                 <Route path="team" element={<TeamPage />} />
@@ -130,8 +133,7 @@ createRoot(document.getElementById("root")).render(
                 element={<AuthenticatedApp allowedRoles={["member"]} />}
               >
                 <Route index element={<Navigate to="tasks" replace />} />
-                {/* <Route path="tasks" element={<TasksPage />} /> */}
-                {/* <Route path="my-tasks" element={<TasksPage myTasksOnly />} /> */}
+                <Route path="tasks" element={<MemberTasksPage />} />
                 <Route path="*" element={<Error404 />} />
               </Route>
 

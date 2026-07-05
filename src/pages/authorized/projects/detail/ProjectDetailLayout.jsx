@@ -14,9 +14,12 @@ import {
   ListIcon,
   PencilSimpleIcon,
   FlowArrowIcon,
+  CaretLeftIcon,
 } from "@phosphor-icons/react";
 import { useAccessControl } from "../../../../context/AccessControlContext";
 import { useMessage } from "../../../../context/MessageContext";
+import LinkButton from "../../../../components/buttons/linkButton/LinkButton";
+import RouterButton from "../../../../components/buttons/routerButton/RouterButton";
 
 export default function ProjectDetailLayout() {
   const { projectId } = useParams();
@@ -57,7 +60,43 @@ export default function ProjectDetailLayout() {
         <NoResult title="Project not found." />
       ) : (
         <div className="pageLayout">
-          <h1 className="textL textBold">Project Detail</h1>
+          <RouterButton
+            icon2={CaretLeftIcon}
+            name="All Projects"
+            to="../"
+            style="button buttonType5 textXXS"
+          />
+
+          {/* ── 1. Page Header & Actions ───────────────────────────────────── */}
+          <PageHeader>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "0.5rem",
+              }}
+            >
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+              >
+                <h1 className="textL textBold">{project.name}</h1>
+                <StatusBadge status={project.status} />
+              </div>
+
+              <h3 className="textXS">Description</h3>
+              <p className="textXXS textLight">{project.description}</p>
+            </div>
+
+            {canAccess({ roles: ["pm"] }) && (
+              <Button
+                style="button buttonType5 textXXS"
+                onClick={() => setEditingProject(true)}
+                name="Edit Project"
+                icon={PencilSimpleIcon}
+                weight="fill"
+              />
+            )}
+          </PageHeader>
 
           {isPm && (
             <div className="pageTabContainer">
@@ -108,27 +147,6 @@ export default function ProjectDetailLayout() {
             </div>
           )}
 
-          {/* ── 1. Page Header & Actions ───────────────────────────────────── */}
-          <PageHeader>
-            <div>
-              <StatusBadge status={project.status} />
-
-              <h2 className="textM textBold">{project.name}</h2>
-
-              <h3 className="textXS">Description</h3>
-              <p className="textXXS textLight">{project.description}</p>
-            </div>
-
-            {canAccess({ roles: ["pm"] }) && (
-              <Button
-                style="button buttonType5 textXXS"
-                onClick={() => setEditingProject(true)}
-                name="Edit Project"
-                icon={PencilSimpleIcon}
-                weight="fill"
-              />
-            )}
-          </PageHeader>
           <Outlet />
 
           {editingProject && (

@@ -44,6 +44,13 @@ export default function StatusBadge({ status }) {
     // Specification Status
     final: "approved",
     // "draft" key above already covers the rest.
+
+    // Task Status
+    blocked: "rejected",
+    to_do: "pending",
+    in_progress: "info",
+    done: "approved",
+    cancelled: "retired",
   };
 
   const normalizedStatus = status?.toLowerCase();

@@ -46,6 +46,12 @@
     background-color: rgb($primary, 0.2);
   }
 
+  &.purple {
+    border: 1px solid #a411c2;
+    color: #a411c2;
+    background-color: rgb(#a411c2, 0.2);
+  }
+
   &.dark {
     border: 1px solid $neutral500;
     color: $neutral100;
@@ -88,6 +94,11 @@
     &.primary {
       border: 1px solid $primary;
       background-color: $primary;
+    }
+
+    &.purple {
+      border: 1px solid #a411c2;
+      background-color: #a411c2;
     }
 
     &.dark {
