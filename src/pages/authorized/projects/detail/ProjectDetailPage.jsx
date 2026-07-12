@@ -11,6 +11,7 @@ import { useParams } from "react-router";
 import Button from "../../../../components/buttons/button/Button";
 import StatusBadge from "../../../../components/status/statusBadge/StatusBadge";
 import StatusBox from "../../../../components/status/statusBox/StatusBox";
+import ProgressBar from "../../../../components/progressBar/ProgressBar";
 import DataSidebar from "../../../../components/dataSidebar/DataSidebar";
 import ActionModal from "../../../../components/modals/actionModal/ActionModal";
 import { useAccessControl } from "../../../../context/AccessControlContext";
@@ -165,6 +166,12 @@ function ProjectDetailPage() {
                   <StatusBadge status={requirement.status} />
                 </div>
                 <p className="textXS textLight">{requirement.description}</p>
+                <div style={{ maxWidth: "220px" }}>
+                  <ProgressBar
+                    completion={requirement.task_completion}
+                    label="Tasks"
+                  />
+                </div>
               </div>
 
               {/* STATUS CHANGE BUTTONS — each gated to the role allowed to

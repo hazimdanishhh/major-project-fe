@@ -5,6 +5,7 @@ import PageHeader from "../../../../components/crud/pageHeader/PageHeader";
 import LoadingIcon from "../../../../components/loadingIcon/LoadingIcon";
 import NoResult from "../../../../components/crud/noResult/NoResult";
 import StatusBadge from "../../../../components/status/statusBadge/StatusBadge";
+import ProgressBar from "../../../../components/progressBar/ProgressBar";
 import Button from "../../../../components/buttons/button/Button";
 import DataSidebar from "../../../../components/dataSidebar/DataSidebar";
 import { getProjectColumns } from "../config/projectFormConfig";
@@ -85,6 +86,13 @@ export default function ProjectDetailLayout() {
 
               <h3 className="textXS">Description</h3>
               <p className="textXXS textLight">{project.description}</p>
+
+              <div style={{ maxWidth: "260px" }}>
+                <ProgressBar
+                  completion={project.requirement_completion}
+                  label="Requirements Completed"
+                />
+              </div>
             </div>
 
             {canAccess({ roles: ["pm"] }) && (

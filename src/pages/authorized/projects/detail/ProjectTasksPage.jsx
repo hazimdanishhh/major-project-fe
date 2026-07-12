@@ -151,7 +151,7 @@ export default function ProjectTasksPage() {
 
           {canAccess({ roles: ["pm"] }) && (
             <Button
-              style="button buttonType5 textXXS"
+              style="button buttonType5 purple textXXS"
               onClick={() => navigate(`/pm/projects/${projectId}/generate-wbs`)}
               name="Generate WBS"
               icon2={SparkleIcon}

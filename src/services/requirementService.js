@@ -34,7 +34,10 @@ import { apiClient } from "../lib/apiClient";
 // Requirement list shape: { id, title, description, status, current_version,
 //                           created_at, updated_at,
 //                           created_by: { id, full_name },
-//                           requirement_specifications: Spec[] }
+//                           requirement_specifications: Spec[],
+//                           task_completion: { total, completed, percentage } }
+//                           ↑ Phase 10 — % of this requirement's tasks that are DONE
+//                             (deprecated/CANCELLED tasks excluded from both)
 export async function fetchRequirements({ project_id, status } = {}) {
   const params = new URLSearchParams();
   if (project_id) params.set("project_id", project_id);
@@ -49,8 +52,10 @@ export async function fetchRequirements({ project_id, status } = {}) {
 // RequirementDetail adds:
 //   created_by_user: { id, full_name }
 //   requirement_specifications: Spec[]
-//   tasks: Array<{ id, title, status, is_at_risk, is_ai_generated,
+//   tasks: Array<{ id, title, status, is_at_risk, is_deprecated, is_ai_generated,
 //                  assignee: { id, full_name } }>
+//   task_completion: { total, completed, percentage }  ← Phase 10, computed
+//     from the tasks array above (deprecated/CANCELLED excluded)
 export async function fetchRequirement(requirementId) {
   return apiClient(`/api/requirements/${requirementId}`);
 }

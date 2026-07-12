@@ -571,4 +571,36 @@
       }
     }
   }
+
+  // PURPLE
+  &.purple {
+    background-color: rgb($purple, 0.1);
+    border: 1px solid $purple;
+    transition: 0.3s;
+    color: $purple;
+
+    &:hover {
+      background-color: $purple;
+      color: $neutral100;
+      border: 1px solid $purple;
+      transition: 0.3s;
+    }
+
+    &.active {
+      background-color: $purple;
+      color: $neutral100;
+      border: 1px solid $purple;
+      transition: 0.3s;
+    }
+
+    &:disabled {
+      color: $neutral600;
+      border: 1px solid $neutral600;
+
+      &:hover {
+        border: 1px solid $neutral600;
+        cursor: not-allowed;
+      }
+    }
+  }
 }

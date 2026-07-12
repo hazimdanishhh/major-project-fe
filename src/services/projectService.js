@@ -22,7 +22,9 @@ import { apiClient } from "../lib/apiClient";
 // Response: { projects: Project[] }
 // Project shape: { id, name, description, status, created_at,
 //                  owner: { id, full_name, role },
-//                  client: { id, full_name, role } }
+//                  client: { id, full_name, role },
+//                  requirement_completion: { total, completed, percentage } }
+//                  ↑ Phase 10 — % of this project's requirements that are COMPLETED
 // export async function fetchProjects() {
 //   return apiClient("/api/projects");
 // }

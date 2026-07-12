@@ -168,7 +168,7 @@ export default function WbsReviewPage() {
         {showReviewActions && (
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
             <Button
-              style="button buttonType5 textXXS"
+              style="button buttonType5 purple textXXS"
               onClick={() => setRegenerateModalOpen(true)}
               name="Regenerate"
               icon2={ArrowsClockwiseIcon}
@@ -176,7 +176,7 @@ export default function WbsReviewPage() {
               disabled={persistingWBS}
             />
             <Button
-              style="button buttonType4 textXXS"
+              style="button buttonType4 rejection textXXS"
               onClick={handleCancel}
               name="Cancel"
               disabled={persistingWBS}
@@ -204,7 +204,7 @@ export default function WbsReviewPage() {
               title={generateError.message || "AI generation failed."}
             />
             <Button
-              style="button buttonType5 approval textXXS"
+              style="button buttonType5 purple textXXS"
               onClick={() => generatePreview()}
               name="Try Again"
               icon2={SparkleIcon}
@@ -222,7 +222,7 @@ export default function WbsReviewPage() {
               Nothing is saved until you review and confirm below.
             </p>
             <Button
-              style="button buttonType5 approval textXXS"
+              style="button buttonType5 purple textXXS"
               onClick={() => generatePreview()}
               name="Generate WBS"
               icon2={SparkleIcon}

@@ -2,6 +2,7 @@ import React from "react";
 import "./ProjectCard.scss";
 import StatusBadge from "../../status/statusBadge/StatusBadge";
 import IconCard from "../../iconCard/IconCard";
+import ProgressBar from "../../progressBar/ProgressBar";
 import { FolderUserIcon, UserCircleIcon } from "@phosphor-icons/react";
 import { Link } from "react-router";
 
@@ -28,6 +29,11 @@ function ProjectCard({ project }) {
           style="textXS"
         />
       </div>
+
+      <ProgressBar
+        completion={project.requirement_completion}
+        label="Requirements"
+      />
     </Link>
   );
 }
