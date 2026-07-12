@@ -63,6 +63,21 @@ export const REQUIREMENT_STATUS_TRANSITIONS = {
   COMPLETED: [],
 };
 
+// Which role may trigger each transition above (frontend copy — kept in sync
+// by hand with major-project-be/src/algorithms.js's
+// REQUIREMENT_TRANSITION_ROLES). Drives which status-advance button(s) render
+// per role: client owns create/submit/validation-decision, pm drives the
+// internal analysis stages.
+export const REQUIREMENT_TRANSITION_ROLES = {
+  DRAFT: { SUBMITTED: ["client"] },
+  SUBMITTED: { UNDER_ANALYSIS: ["pm"] },
+  UNDER_ANALYSIS: { SPECIFICATION_DRAFTED: ["pm"] },
+  SPECIFICATION_DRAFTED: { CLIENT_VALIDATION: ["pm"] },
+  CLIENT_VALIDATION: { APPROVED: ["client"], UNDER_ANALYSIS: ["client"] },
+  APPROVED: { IMPLEMENTATION: ["pm"], UNDER_ANALYSIS: ["client"] },
+  IMPLEMENTATION: { COMPLETED: ["pm"], UNDER_ANALYSIS: ["client"] },
+};
+
 // Requirement statuses a specification can be created/edited in — mirrors
 // the backend's SPEC_ALLOWED_STATUSES in requirementController.js.
 export const SPEC_ALLOWED_STATUSES = ["UNDER_ANALYSIS", "SPECIFICATION_DRAFTED"];

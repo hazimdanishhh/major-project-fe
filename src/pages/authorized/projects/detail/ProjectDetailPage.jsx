@@ -21,6 +21,7 @@ import {
   useRequirementVersions,
   useRequirementHistory,
   REQUIREMENT_STATUS_TRANSITIONS,
+  REQUIREMENT_TRANSITION_ROLES,
   SPEC_ALLOWED_STATUSES,
 } from "../../../../hooks/useRequirements";
 import {
@@ -131,7 +132,7 @@ function ProjectDetailPage() {
       <PageHeader>
         <SectionHeader title="Requirements" icon={ClipboardTextIcon} />
 
-        {canAccess({ roles: ["pm", "client"] }) && (
+        {canAccess({ roles: ["client"] }) && (
           <Button
             style="button buttonType5 approval textXXS"
             onClick={() =>
@@ -166,10 +167,19 @@ function ProjectDetailPage() {
                 <p className="textXS textLight">{requirement.description}</p>
               </div>
 
-              {/* STATUS CHANGE BUTTONS */}
+              {/* STATUS CHANGE BUTTONS — each gated to the role allowed to
+                  trigger that specific transition, not a blanket pm/client check */}
               <div className="requirementCardRight">
-                {canAccess({ roles: ["pm", "client"] }) &&
-                  transitions.map((t) => (
+                {transitions
+                  .filter((t) =>
+                    canAccess({
+                      roles:
+                        REQUIREMENT_TRANSITION_ROLES[requirement.status]?.[
+                          t.status
+                        ] ?? [],
+                    }),
+                  )
+                  .map((t) => (
                     <Button
                       key={t.status}
                       style={`button buttonType5 ${t.tone === "forward" ? "approval" : "rejection"} textXXS`}
@@ -180,7 +190,7 @@ function ProjectDetailPage() {
                       weight="fill"
                     />
                   ))}
-                {canAccess({ roles: ["pm", "client"] }) && (
+                {canAccess({ roles: ["client"] }) && (
                   <Button
                     style="button buttonType5 textXXS"
                     onClick={() =>
@@ -201,80 +211,78 @@ function ProjectDetailPage() {
               </div>
             </div>
 
-            {(requirement.requirement_specifications || []).length > 0 && (
-              <div className="generalCard sectionDark">
-                <PageHeader>
-                  <SectionHeader title="Specifications" icon={WrenchIcon} />
+            <div className="generalCard sectionDark">
+              <PageHeader>
+                <SectionHeader title="Specifications" icon={WrenchIcon} />
 
-                  {canAccess({ roles: ["pm"] }) && (
-                    <Button
-                      style="button buttonType5 approval textXXS"
-                      onClick={() =>
-                        setSpecSidebar({
-                          mode: "create",
-                          requirement,
-                          spec: {},
-                        })
-                      }
-                      name="Add Specification"
-                      icon={PlusCircleIcon}
-                      weight="fill"
-                      disabled={!specsAllowed}
-                      title={
-                        !specsAllowed
-                          ? "Specs can only be added while Under Analysis or Specification Drafted"
-                          : undefined
-                      }
-                    />
-                  )}
-                </PageHeader>
+                {canAccess({ roles: ["pm"] }) && (
+                  <Button
+                    style="button buttonType5 approval textXXS"
+                    onClick={() =>
+                      setSpecSidebar({
+                        mode: "create",
+                        requirement,
+                        spec: {},
+                      })
+                    }
+                    name="Add Specification"
+                    icon={PlusCircleIcon}
+                    weight="fill"
+                    disabled={!specsAllowed}
+                    title={
+                      !specsAllowed
+                        ? "Specs can only be added while Under Analysis or Specification Drafted"
+                        : undefined
+                    }
+                  />
+                )}
+              </PageHeader>
 
-                {requirement.requirement_specifications.map((spec, index) => (
-                  <div
-                    key={spec.id}
-                    className="generalCard requirementCard specificationCard"
-                  >
-                    <div className="requirementCardLeft">
-                      <div className="requirementCardHeader">
-                        <p className="textXS textBold">
-                          {index + 1} - {spec.title || "Untitled specification"}
-                        </p>
-                        <StatusBadge status={spec.status} />
-                        {spec.complexity_score !== null &&
-                          spec.complexity_score !== undefined && (
-                            <StatusBox
-                              status={`Complexity: ${spec.complexity_score}`}
-                              type="grey"
-                            />
-                          )}
-                      </div>
-
-                      <p className="textXS textLight">{spec.description}</p>
+              {(requirement.requirement_specifications || []).map((spec, index) => (
+                <div
+                  key={spec.id}
+                  className="generalCard requirementCard specificationCard"
+                >
+                  <div className="requirementCardLeft">
+                    <div className="requirementCardHeader">
+                      <p className="textXS textBold">
+                        {index + 1} - {spec.title || "Untitled specification"}
+                      </p>
+                      <StatusBadge status={spec.status} />
+                      {spec.complexity_score !== null &&
+                        spec.complexity_score !== undefined && (
+                          <StatusBox
+                            status={`Complexity: ${spec.complexity_score}`}
+                            type="grey"
+                          />
+                        )}
                     </div>
 
-                    <div className="requirementCardRight">
-                      {canAccess({ roles: ["pm"] }) && (
-                        <Button
-                          style="button buttonType5 textXXS"
-                          onClick={() =>
-                            setSpecSidebar({ mode: "edit", requirement, spec })
-                          }
-                          name="Edit"
-                          icon={PencilSimpleIcon}
-                          weight="fill"
-                          disabled={!specsAllowed}
-                          title={
-                            !specsAllowed
-                              ? "Specs can only be edited while Under Analysis or Specification Drafted"
-                              : undefined
-                          }
-                        />
-                      )}
-                    </div>
+                    <p className="textXS textLight">{spec.description}</p>
                   </div>
-                ))}
-              </div>
-            )}
+
+                  <div className="requirementCardRight">
+                    {canAccess({ roles: ["pm"] }) && (
+                      <Button
+                        style="button buttonType5 textXXS"
+                        onClick={() =>
+                          setSpecSidebar({ mode: "edit", requirement, spec })
+                        }
+                        name="Edit"
+                        icon={PencilSimpleIcon}
+                        weight="fill"
+                        disabled={!specsAllowed}
+                        title={
+                          !specsAllowed
+                            ? "Specs can only be edited while Under Analysis or Specification Drafted"
+                            : undefined
+                        }
+                      />
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         );
       })}

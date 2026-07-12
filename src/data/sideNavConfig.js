@@ -11,9 +11,7 @@ import {
   FolderIcon,
   ListChecksIcon,
   UsersIcon,
-  HouseIcon,
   UserCircleIcon,
-  ChartBarIcon,
 } from "@phosphor-icons/react";
 
 // ─── Role home paths (used by PublicRoute redirect and after login) ────────────
@@ -33,16 +31,13 @@ export const ROLE_BASE = {
 // ─── Navigation config ────────────────────────────────────────────────────────
 export const sideNavConfig = [
   // ── General (all roles) ───────────────────────────────────────────────────
+  // Dashboard was dropped from here — no route exists for it on any role's
+  // tree, and building an actual dashboard is separate, larger work than this
+  // nav-link cleanup. Re-add once that page actually exists.
   {
     segmentTitle: null,
     segmentCode: null,
     links: [
-      {
-        label: "Dashboard",
-        icon: HouseIcon,
-        path: "dashboard",
-        // no roles = visible to all authenticated users
-      },
       {
         label: "Profile",
         icon: UserCircleIcon,
@@ -67,12 +62,6 @@ export const sideNavConfig = [
         icon: ListChecksIcon,
         path: "tasks",
         roles: ["pm", "member"],
-      },
-      {
-        label: "My Tasks",
-        icon: ListChecksIcon,
-        path: "my-tasks",
-        roles: ["member"],
       },
     ],
   },

@@ -48,9 +48,9 @@ import TaskGraphPage from "./pages/authorized/projects/detail/TaskGraphPage";
 import CriticalPathPage from "./pages/authorized/projects/detail/CriticalPathPage";
 import WbsReviewPage from "./pages/authorized/projects/detail/WbsReviewPage";
 import MemberTasksPage from "./pages/authorized/tasks/MemberTasksPage";
+import ProfilePage from "./pages/authorized/profile/ProfilePage";
 // import ProjectDetailPage from "./pages/authorized/projects/ProjectDetailPage";
 // import DashboardPage from "./pages/authorized/dashboard/DashboardPage";
-// import TraceabilityPage from "./pages/authorized/traceability/TraceabilityPage";
 
 // ─── Shared authenticated shell ───────────────────────────────────────────────
 // AppLayout + AccessControlProvider are shared across all role route trees.
@@ -111,8 +111,8 @@ createRoot(document.getElementById("root")).render(
                   <Route path="generate-wbs" element={<WbsReviewPage />} />
                 </Route>
                 <Route path="tasks" element={<TasksPage />} />
-                {/* <Route path="traceability" element={<TraceabilityPage />} /> */}
                 {/* <Route path="dashboard" element={<DashboardPage />} /> */}
+                <Route path="profile" element={<ProfilePage />} />
                 <Route path="team" element={<TeamPage />} />
                 <Route path="*" element={<Error404 />} />
               </Route>
@@ -130,6 +130,7 @@ createRoot(document.getElementById("root")).render(
                 >
                   <Route index element={<ProjectDetailPage />} />
                 </Route>
+                <Route path="profile" element={<ProfilePage />} />
                 <Route path="*" element={<Error404 />} />
               </Route>
 
@@ -140,6 +141,7 @@ createRoot(document.getElementById("root")).render(
               >
                 <Route index element={<Navigate to="tasks" replace />} />
                 <Route path="tasks" element={<MemberTasksPage />} />
+                <Route path="profile" element={<ProfilePage />} />
                 <Route path="*" element={<Error404 />} />
               </Route>
 
