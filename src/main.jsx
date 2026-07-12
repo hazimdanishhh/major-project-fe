@@ -44,6 +44,7 @@ import ProjectDetailLayout from "./pages/authorized/projects/detail/ProjectDetai
 import TeamPage from "./pages/authorized/team/TeamPage";
 import TasksPage from "./pages/authorized/tasks/TasksPage";
 import ProjectTasksPage from "./pages/authorized/projects/detail/ProjectTasksPage";
+import TaskGraphPage from "./pages/authorized/projects/detail/TaskGraphPage";
 import MemberTasksPage from "./pages/authorized/tasks/MemberTasksPage";
 // import ProjectDetailPage from "./pages/authorized/projects/ProjectDetailPage";
 // import DashboardPage from "./pages/authorized/dashboard/DashboardPage";
@@ -103,6 +104,7 @@ createRoot(document.getElementById("root")).render(
                 >
                   <Route index element={<ProjectDetailPage />} />
                   <Route path="tasks" element={<ProjectTasksPage />} />
+                  <Route path="task-graph" element={<TaskGraphPage />} />
                 </Route>
                 <Route path="tasks" element={<TasksPage />} />
                 {/* <Route path="traceability" element={<TraceabilityPage />} /> */}

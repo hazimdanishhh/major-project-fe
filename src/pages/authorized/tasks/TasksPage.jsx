@@ -87,7 +87,7 @@ export default function TasksPage() {
   // once via a small lookup map rather than per-card network calls.
   const { data: projectsResp } = useQuery({
     queryKey: ["projects", "lookup"],
-    queryFn: () => fetchProjects({ page: 1, pageSize: 200 }),
+    queryFn: () => fetchProjects({ page: 1, pageSize: 100 }),
     staleTime: 1000 * 60 * 2,
   });
   const projectsById = useMemo(() => {

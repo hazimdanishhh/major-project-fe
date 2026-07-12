@@ -2,16 +2,18 @@
 //
 // Covers: GET /api/projects, POST, GET /:id, PATCH /:id, DELETE /:id
 //         GET /:id/critical-path
+//         GET /:id/task-graph
 //         POST /:id/generate-wbs   (AI phase 1 — preview only)
 //         POST /:id/persist-wbs    (AI phase 2 — save after PM review)
 //
 // Response envelopes from the backend:
-//   list    → { projects: Project[] }
-//   single  → { project: Project }
-//   archive → { message: string, project: Project }
-//   cpm     → { schedule: ScheduleEntry[], criticalPath: string[], projectDuration: number }
-//   wbs     → { tasks: WBSTask[], message: string }
-//   persist → { message: string, created_task_ids: string[], dependency_count: number }
+//   list       → { projects: Project[] }
+//   single     → { project: Project }
+//   archive    → { message: string, project: Project }
+//   cpm        → { schedule: ScheduleEntry[], criticalPath: string[], projectDuration: number }
+//   task-graph → { tasks: Task[], dependencies: Dependency[] }  ← raw nodes/edges, no CPM
+//   wbs        → { tasks: WBSTask[], message: string }
+//   persist    → { message: string, created_task_ids: string[], dependency_count: number }
 
 import { apiClient } from "../lib/apiClient";
 
@@ -93,6 +95,14 @@ export async function archiveProject(projectId) {
 // }
 export async function fetchCriticalPath(projectId) {
   return apiClient(`/api/projects/${projectId}/critical-path`);
+}
+
+// ─── Task dependency graph (all authenticated users) ──────────────────────────
+// Raw nodes/edges for the project's task graph — no CPM computation applied
+// (use fetchCriticalPath for that). Response: { tasks: Task[], dependencies:
+// Dependency[] }, where Dependency = { task_id, depends_on_task_id, is_ai_generated }.
+export async function fetchTaskGraph(projectId) {
+  return apiClient(`/api/projects/${projectId}/task-graph`);
 }
 
 // ─── AI WBS Generation — Phase 1: Preview (pm only) ──────────────────────────

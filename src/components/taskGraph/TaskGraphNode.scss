@@ -1,0 +1,27 @@
+.taskGraphNode {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  width: 220px;
+  border: 1px solid $neutral500;
+  background-color: rgb($neutral300, 0.1);
+  border-radius: 10px;
+  padding: 0.8rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.taskGraphNodeHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  h5 {
+    word-break: break-word;
+  }
+}
+
+.taskGraphNodeBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
