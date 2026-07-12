@@ -1,0 +1,63 @@
+.wbsTaskRow {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.wbsTaskRowHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.wbsTaskRowTitle {
+  flex: 1;
+  border: 1px solid $neutral400;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  background: transparent;
+  color: inherit;
+}
+
+.wbsTaskRowDescription {
+  width: 100%;
+  min-height: 3rem;
+  border: 1px solid $neutral400;
+  border-radius: 6px;
+  padding: 0.4rem 0.6rem;
+  background: transparent;
+  color: inherit;
+  resize: vertical;
+}
+
+.wbsTaskRowFields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.wbsTaskRowField {
+  flex: 1;
+  min-width: 180px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+
+  input[type="number"] {
+    border: 1px solid $neutral400;
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    background: transparent;
+    color: inherit;
+  }
+}
+
+.wbsTaskRowPriority {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  .selectContainer {
+    flex: 1;
+  }
+}

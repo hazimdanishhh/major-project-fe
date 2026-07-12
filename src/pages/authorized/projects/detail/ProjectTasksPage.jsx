@@ -8,11 +8,12 @@
 // is already fixed by the URL).
 
 import { useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   ListChecksIcon,
   PencilSimpleIcon,
   PlusCircleIcon,
+  SparkleIcon,
 } from "@phosphor-icons/react";
 import { useAccessControl } from "../../../../context/AccessControlContext";
 import { useMessage } from "../../../../context/MessageContext";
@@ -39,6 +40,7 @@ import { getSortConfig } from "../../tasks/config/taskSortConfig";
 
 export default function ProjectTasksPage() {
   const { projectId } = useParams();
+  const navigate = useNavigate();
   const { canAccess } = useAccessControl();
   const { showMessage } = useMessage();
   const {
@@ -146,6 +148,16 @@ export default function ProjectTasksPage() {
             sortOrder={sortOrder}
             setSortOrder={setSortOrder}
           />
+
+          {canAccess({ roles: ["pm"] }) && (
+            <Button
+              style="button buttonType5 textXXS"
+              onClick={() => navigate(`/pm/projects/${projectId}/generate-wbs`)}
+              name="Generate WBS"
+              icon2={SparkleIcon}
+              weight="fill"
+            />
+          )}
 
           {canAccess({ roles: ["pm"] }) && (
             <Button

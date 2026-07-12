@@ -5,24 +5,23 @@
 // reusing the exact same badge components/tones rather than inventing new
 // styling. Left handle = incoming ("depends on"), right handle = outgoing
 // ("blocks") — dragging right-handle -> left-handle wires up a dependency.
+//
+// Also reused, unchanged, by the Critical Path view (Phase 6): when data.cpm
+// (a schedule row: {ES,EF,LS,LF,float}) is present, its figures render below
+// the badges, and data.isCritical adds the "critical" highlight class. The
+// plain Task Graph tab never sets either, so its rendering is untouched.
 
 import { Handle, Position } from "@xyflow/react";
 import StatusBadge from "../status/statusBadge/StatusBadge";
 import StatusBox from "../status/statusBox/StatusBox";
+import { PRIORITY_TONE } from "../../constants/taskTones";
 import "./TaskGraphNode.scss";
 
-const PRIORITY_TONE = {
-  LOW: "grey",
-  MEDIUM: "blue",
-  HIGH: "yellow",
-  CRITICAL: "red",
-};
-
 export default function TaskGraphNode({ data }) {
-  const { task } = data;
+  const { task, isCritical, cpm } = data;
 
   return (
-    <div className="taskGraphNode">
+    <div className={`taskGraphNode ${isCritical ? "critical" : ""}`}>
       <Handle type="target" position={Position.Left} />
 
       <div className="taskGraphNodeHeader">
@@ -42,6 +41,12 @@ export default function TaskGraphNode({ data }) {
       <p className="textXXS textLight">
         {task.assignee?.full_name || "Unassigned"}
       </p>
+
+      {cpm && (
+        <p className="textXXS textLight taskGraphNodeCpm">
+          ES {cpm.ES} · EF {cpm.EF} · Float {cpm.float}
+        </p>
+      )}
 
       <Handle type="source" position={Position.Right} />
     </div>

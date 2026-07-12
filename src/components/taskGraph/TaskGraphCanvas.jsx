@@ -9,6 +9,10 @@
 // since the source of truth is the backend (cycle/duplicate rejection has
 // to round-trip there) and TanStack Query's invalidation feeds fresh
 // tasks/dependencies back in as props, resynced below.
+//
+// Also doubles as the Critical Path view's canvas (Phase 6): passing
+// criticalPathIds/schedule layers CPM highlighting on top without changing
+// anything for the plain Task Graph tab, which doesn't pass them.
 
 import { useEffect } from "react";
 import {
@@ -26,17 +30,35 @@ import "./TaskGraphCanvas.scss";
 
 const nodeTypes = { taskNode: TaskGraphNode };
 
-function buildEdges(dependencies) {
-  return dependencies.map((dep) => ({
-    id: `${dep.task_id}-${dep.depends_on_task_id}`,
-    source: dep.depends_on_task_id,
-    target: dep.task_id,
-    data: {
-      task_id: dep.task_id,
-      depends_on_task_id: dep.depends_on_task_id,
-    },
-    markerEnd: { type: MarkerType.ArrowClosed },
-  }));
+// Stable empty references for the Critical Path props Task Graph doesn't
+// pass — a `= new Set()`/`= new Map()` default parameter creates a NEW
+// object on every render, which would change the resync effect's
+// dependency array every render and infinite-loop (same reasoning as
+// ActionModal.jsx's EMPTY_FIELDS).
+const EMPTY_CRITICAL_PATH_IDS = new Set();
+const EMPTY_SCHEDULE = new Map();
+
+function buildEdges(dependencies, criticalPathIds) {
+  return dependencies.map((dep) => {
+    const isCritical =
+      criticalPathIds.has(dep.task_id) &&
+      criticalPathIds.has(dep.depends_on_task_id);
+    return {
+      id: `${dep.task_id}-${dep.depends_on_task_id}`,
+      source: dep.depends_on_task_id,
+      target: dep.task_id,
+      data: {
+        task_id: dep.task_id,
+        depends_on_task_id: dep.depends_on_task_id,
+      },
+      animated: isCritical,
+      style: isCritical ? { stroke: "#d76363", strokeWidth: 2.5 } : undefined,
+      markerEnd: {
+        type: MarkerType.ArrowClosed,
+        color: isCritical ? "#d76363" : undefined,
+      },
+    };
+  });
 }
 
 export default function TaskGraphCanvas({
@@ -44,6 +66,9 @@ export default function TaskGraphCanvas({
   dependencies,
   onConnect,
   onEdgeClick,
+  criticalPathIds = EMPTY_CRITICAL_PATH_IDS,
+  schedule = EMPTY_SCHEDULE,
+  readOnly = false,
 }) {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -61,13 +86,17 @@ export default function TaskGraphCanvas({
           id: task.id,
           type: "taskNode",
           position: existing?.position ?? positions.get(task.id) ?? { x: 0, y: 0 },
-          data: { task },
+          data: {
+            task,
+            isCritical: criticalPathIds.has(task.id),
+            cpm: schedule.get(task.id),
+          },
         };
       });
     });
-    setEdges(buildEdges(dependencies));
+    setEdges(buildEdges(dependencies, criticalPathIds));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tasks, dependencies]);
+  }, [tasks, dependencies, criticalPathIds, schedule]);
 
   return (
     <div className="taskGraphCanvas">
@@ -77,8 +106,9 @@ export default function TaskGraphCanvas({
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onConnect={onConnect}
-        onEdgeClick={(_event, edge) => onEdgeClick(edge)}
+        onConnect={readOnly ? undefined : onConnect}
+        onEdgeClick={readOnly ? undefined : (_event, edge) => onEdgeClick(edge)}
+        nodesConnectable={!readOnly}
         fitView
       >
         <Background />

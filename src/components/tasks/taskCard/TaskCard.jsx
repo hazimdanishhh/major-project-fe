@@ -11,14 +11,8 @@ import StatusBadge from "../../status/statusBadge/StatusBadge";
 import StatusBox from "../../status/statusBox/StatusBox";
 import { useAccessControl } from "../../../context/AccessControlContext";
 import { TASK_STATUS_TRANSITIONS } from "../../../hooks/useTasks";
+import { PRIORITY_TONE } from "../../../constants/taskTones";
 import "./TaskCard.scss";
-
-const PRIORITY_TONE = {
-  LOW: "grey",
-  MEDIUM: "blue",
-  HIGH: "yellow",
-  CRITICAL: "red",
-};
 
 // Shared by the PM All Tasks page and the project-nested Tasks page.
 // `hideProject` drops the project label when the project is already fixed

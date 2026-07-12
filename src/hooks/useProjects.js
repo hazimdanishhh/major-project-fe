@@ -80,6 +80,12 @@ export function useCriticalPath(projectId) {
   };
 }
 
+// Stable empty reference — WbsReviewPage.jsx compares wbsTasks by identity
+// (to detect "a new preview just arrived" without an effect); a `?? []`
+// literal would create a new array every render and make that comparison
+// never settle, infinite-looping.
+const EMPTY_WBS_TASKS = [];
+
 // ─── WBS preview (AI phase 1) ─────────────────────────────────────────────────
 // Using useQuery so the preview can be cached and re-read without re-calling the LLM.
 // Set enabled: false by default — trigger manually with refetch().
@@ -93,7 +99,7 @@ export function useWBSPreview(projectId) {
   });
 
   return {
-    wbsTasks: data?.tasks ?? [],
+    wbsTasks: data?.tasks ?? EMPTY_WBS_TASKS,
     isGenerating: isLoading || isFetching,
     generateError: error,
     generatePreview: refetch,

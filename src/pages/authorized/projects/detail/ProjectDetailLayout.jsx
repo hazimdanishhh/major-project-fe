@@ -144,6 +144,21 @@ export default function ProjectDetailLayout() {
                 </div>
                 Task Graph
               </NavLink>
+
+              {/* CRITICAL PATH */}
+              <NavLink
+                to="./critical-path"
+                className={({ isActive }) =>
+                  `button buttonTypeTab textRegular textXS ${
+                    isActive ? "active" : ""
+                  }`
+                }
+              >
+                <div className="pageTabIcon">
+                  <ChartLineIcon size={15} />
+                </div>
+                Critical Path
+              </NavLink>
             </div>
           )}
 

@@ -45,6 +45,8 @@ import TeamPage from "./pages/authorized/team/TeamPage";
 import TasksPage from "./pages/authorized/tasks/TasksPage";
 import ProjectTasksPage from "./pages/authorized/projects/detail/ProjectTasksPage";
 import TaskGraphPage from "./pages/authorized/projects/detail/TaskGraphPage";
+import CriticalPathPage from "./pages/authorized/projects/detail/CriticalPathPage";
+import WbsReviewPage from "./pages/authorized/projects/detail/WbsReviewPage";
 import MemberTasksPage from "./pages/authorized/tasks/MemberTasksPage";
 // import ProjectDetailPage from "./pages/authorized/projects/ProjectDetailPage";
 // import DashboardPage from "./pages/authorized/dashboard/DashboardPage";
@@ -105,6 +107,8 @@ createRoot(document.getElementById("root")).render(
                   <Route index element={<ProjectDetailPage />} />
                   <Route path="tasks" element={<ProjectTasksPage />} />
                   <Route path="task-graph" element={<TaskGraphPage />} />
+                  <Route path="critical-path" element={<CriticalPathPage />} />
+                  <Route path="generate-wbs" element={<WbsReviewPage />} />
                 </Route>
                 <Route path="tasks" element={<TasksPage />} />
                 {/* <Route path="traceability" element={<TraceabilityPage />} /> */}
